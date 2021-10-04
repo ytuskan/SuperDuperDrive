@@ -44,7 +44,18 @@ public class NoteTests {
     }
 
     @Test
-    public void testNote() throws InterruptedException {
+    public void testAddNote() throws InterruptedException {
+        NotePage notePage = new NotePage(driver);
+        notePage.openNotes();
+
+        notePage.addNote(driver);
+        driver.get(baseURL + "/home");
+        notePage.openNotes();
+        Thread.sleep(2000);
+    }
+
+    @Test
+    public void testUpdateNote() throws InterruptedException {
         NotePage notePage = new NotePage(driver);
         notePage.openNotes();
 
@@ -55,11 +66,21 @@ public class NoteTests {
         notePage.updateNote(driver);
         driver.get(baseURL + "/home");
         notePage.openNotes();
+        Thread.sleep(2000);
+    }
+
+    @Test
+    public void testDeleteNote() throws InterruptedException {
+        NotePage notePage = new NotePage(driver);
+        notePage.openNotes();
+
+        notePage.addNote(driver);
+        driver.get(baseURL + "/home");
+        notePage.openNotes();
 
         notePage.deleteNote(driver);
         driver.get(baseURL + "/home");
         notePage.openNotes();
-
-        Thread.sleep(5000);
+        Thread.sleep(2000);
     }
 }

@@ -13,24 +13,19 @@ public class CredentialService {
     @Autowired
     private CredentialMapper credentialMapper;
 
-    public void addCredential(Credential credential) {
+    public void createCredential(Credential credential) {
         this.credentialMapper.insertCredential(credential);
-    }
-
-    public Credential getCredentialById(Long credentialId) {
-        return this.credentialMapper.findCredential(credentialId);
     }
 
     public void updateCredential(Credential credential) {
         this.credentialMapper.updateCredential(credential);
     }
 
-
     public List<Credential> getCredentials(Long userId) {
         return this.credentialMapper.findCredentials(userId);
     }
 
-    public void deleteCredential(Long credntialId) {
-        this.credentialMapper.deleteCredential(credntialId);
+    public void deleteCredential(Long credentialId) {
+        this.credentialMapper.deleteCredential(credentialId);
     }
 }

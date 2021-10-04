@@ -17,37 +17,27 @@ import java.util.List;
 public class HomeController {
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private NoteService noteService;
-
-    @Autowired
-    private CredentialService credentialService;
-
-    @Autowired
-    private FileService fileService;
-
     @Autowired
     private EncryptionService encryptionService;
 
+    @Autowired
+    private FileService fileService;
+    @Autowired
+    private NoteService noteService;
+    @Autowired
+    private CredentialService credentialService;
+
     @GetMapping("/home")
-    public String getHome(File file, Credential credential, Note note, Authentication authentication, Model model) {
+    public String getHomePage(File file, Note note, Credential credential, Authentication authentication, Model model) {
         User user = userService.getUser(authentication.getName());
         List<Credential> credentials = credentialService.getCredentials(user.getUserId());
-        List<Note> notes = noteService.getNotes(user.getUserId());
-        String key = user.getSalt();
+        List<Note> notes = noteService.getNotesByUserId(user.getUserId());
         List<File> files = fileService.filesUpload(user.getUserId());
-        model.addAttribute("key", key);
+        model.addAttribute("key", user.getSalt());
         model.addAttribute("encryptionService", encryptionService);
+        model.addAttribute("files", files);
         model.addAttribute("notes", notes);
         model.addAttribute("credentials", credentials);
-        model.addAttribute("files", files);
         return "home";
     }
-
-    @GetMapping("/")
-    public String getHome2() {
-        return "redirect:/home";
-    }
-
 }

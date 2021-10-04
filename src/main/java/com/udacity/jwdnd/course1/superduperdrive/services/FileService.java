@@ -13,8 +13,8 @@ public class FileService {
     @Autowired
     private FileMapper fileMapper;
 
-    public File getFileUpload(Long fileId) {
-        return fileMapper.findFile(fileId);
+    public File getFileByName(String fileName) {
+        return fileMapper.findFileByName(fileName);
     }
 
     public void insertFile(File file) {
@@ -29,18 +29,8 @@ public class FileService {
         return fileMapper.findFilesByUserId(userId);
     }
 
-    public File getFileByName(String fileName) {
-        return fileMapper.findFileByName(fileName);
-    }
-
-    public Boolean fileExist(String fileName, Long userId) {
-        Boolean exists = false;
-        List<File> files = filesUpload(userId);
-        for (int i = 0; i < files.size(); i++) {
-            if (files.get(i).getFileName().equals(fileName)) {
-                exists = true;
-            }
-        }
+    public Boolean fileExist(String fileName) {
+        boolean exists = fileMapper.findFileByName(fileName) != null;
         return exists;
     }
 

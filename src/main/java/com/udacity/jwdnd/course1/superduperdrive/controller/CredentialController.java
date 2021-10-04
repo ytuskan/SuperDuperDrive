@@ -27,18 +27,16 @@ public class CredentialController {
     public String addCredential(@ModelAttribute("Credential") Credential credential, Authentication authentication, Model model) {
         User user = userService.getUser(authentication.getName());
         credential.setUserId(user.getUserId());
-        String key = user.getSalt();
-        credential.setPassword(encryptionService.encryptValue(credential.getPassword(), key));
+        credential.setPassword(encryptionService.encryptValue(credential.getPassword(), user.getSalt()));
 
         if (credential.getCredentialId() == null) {
-            this.credentialService.addCredential(credential);
+            this.credentialService.createCredential(credential);
             model.addAttribute("credentials", this.credentialService.getCredentials(user.getUserId()));
             model.addAttribute("successMessage", "Credential successfully added!");
         } else {
             this.credentialService.updateCredential(credential);
             model.addAttribute("successMessage", "Credential successfully updated!");
         }
-
         return "result";
     }
 

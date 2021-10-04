@@ -1,9 +1,7 @@
 package com.udacity.jwdnd.course1.superduperdrive;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.opera.OperaDriver;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -44,23 +42,43 @@ public class CredentialTests {
     }
 
     @Test
-    public void testCredential() throws InterruptedException {
+    public void testAddCredential() throws InterruptedException {
         CredentialPage credentialPage = new CredentialPage(driver);
         credentialPage.openCredentials();
 
         credentialPage.addCredential(driver);
         driver.get(baseURL + "/home");
         credentialPage.openCredentials();
-        Thread.sleep(1000);
+        Thread.sleep(2000);
+    }
+
+    @Test
+    public void testUpdateCredential() throws InterruptedException {
+        CredentialPage credentialPage = new CredentialPage(driver);
+        credentialPage.openCredentials();
+
+        credentialPage.addCredential(driver);
+        driver.get(baseURL + "/home");
+        credentialPage.openCredentials();
 
         credentialPage.updateCredential(driver);
         driver.get(baseURL + "/home");
         credentialPage.openCredentials();
-        Thread.sleep(1000);
+        Thread.sleep(2000);
+    }
+
+    @Test
+    public void testDeleteCredential() throws InterruptedException {
+        CredentialPage credentialPage = new CredentialPage(driver);
+        credentialPage.openCredentials();
+
+        credentialPage.addCredential(driver);
+        driver.get(baseURL + "/home");
+        credentialPage.openCredentials();
 
         credentialPage.deleteCredential(driver);
         driver.get(baseURL + "/home");
         credentialPage.openCredentials();
-        Thread.sleep(5000);
+        Thread.sleep(2000);
     }
 }

@@ -36,8 +36,10 @@ class SuperDuperDriveApplicationTests {
     }
 
     @Test
-    public void testGetHomePage() {
+    public void testGetHomePageWithoutLogin() throws InterruptedException {
         driver.get(baseURL + "/home");
+        Assertions.assertTrue(driver.getCurrentUrl().equals(baseURL+"/login"));
+        Thread.sleep(2000);
     }
 
     @Test
@@ -50,21 +52,23 @@ class SuperDuperDriveApplicationTests {
         driver.get(baseURL + "/login");
         LoginPage loginPage = new LoginPage(driver);
         loginPage.loginError(username, password);
+        Thread.sleep(2000);
 
         driver.get(baseURL + "/signup");
         SignupPage signupPage = new SignupPage(driver);
         signupPage.signup(firstName, lastName, username, password);
+        Thread.sleep(2000);
 
-        driver.get(baseURL + "/login");
         loginPage.login(username, password);
-
-        driver.get(baseURL + "/home");
+        Thread.sleep(2000);
 
         loginPage.logout();
+        Thread.sleep(2000);
 
         driver.get(baseURL + "/home");
+        Assertions.assertTrue(driver.getCurrentUrl().equals(baseURL + "/login"));
 
-        Thread.sleep(5000);
+        Thread.sleep(2000);
     }
 
 }

@@ -17,15 +17,7 @@ public class NoteService {
         this.noteMapper.insertNote(note);
     }
 
-    public Note getNote(Note note) {
-        return this.noteMapper.findNote(note);
-    }
-
-    public Note getNoteById(Long noteId) {
-        return this.noteMapper.findNoteById(noteId);
-    }
-
-    public List<Note> getNotes(Long userId) {
+    public List<Note> getNotesByUserId(Long userId) {
         return this.noteMapper.findAllNotes(userId);
     }
 

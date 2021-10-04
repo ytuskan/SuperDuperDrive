@@ -15,21 +15,20 @@ public class NoteController {
 
     @Autowired
     private NoteService noteService;
-
     @Autowired
     private UserService userService;
 
 
     @PostMapping("/notes")
-    public String addUpdateNote(@ModelAttribute("Note") Note note, Authentication authentication, Model model) {
+    public String addNote(@ModelAttribute("Note") Note note, Authentication authentication, Model model) {
 
         String username = authentication.getName();
         Long userId = userService.getUser(username).getUserId();
         note.setUserId(userId);
 
-        if (note.getNoteId() == null || note.getNoteId() == 0) {
+        if (note.getNoteId() == null) {
             this.noteService.addNote(note);
-            model.addAttribute("notes", this.noteService.getNotes(userId));
+            model.addAttribute("notes", this.noteService.getNotesByUserId(userId));
             model.addAttribute("successMessage", "Note successfully added!");
         } else {
             this.noteService.updateNote(note);
@@ -42,14 +41,6 @@ public class NoteController {
     public String deleteNote(@PathVariable("noteId") Long noteId, Model model) {
         noteService.deleteNote(noteId);
         model.addAttribute("successMessage", "Note successfully deleted!");
-        return "result";
-    }
-
-    @GetMapping("/editNote/{noteId}")
-    public String showUpdateForm(Note note, Model model) {
-        note = noteService.getNote(note);
-        model.addAttribute("note", note);
-
         return "result";
     }
 }
