@@ -30,8 +30,7 @@ public class FileService {
     }
 
     public Boolean fileExist(String fileName) {
-        boolean exists = fileMapper.findFileByName(fileName) != null;
-        return exists;
+        return fileMapper.findFileByName(fileName) != null;
     }
 
 }
